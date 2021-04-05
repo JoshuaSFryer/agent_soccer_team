@@ -1,0 +1,12 @@
+MAS agent_soccer_team {
+
+	infrastructure: Centralised
+
+	environment: SoccerEnvironment
+
+	agents:
+		agent1 sample_agent;
+
+	aslSourcePath:
+		"src/asl";
+}
