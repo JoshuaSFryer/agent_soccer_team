@@ -58,7 +58,7 @@ public class SoccerEnvironment extends Environment {
         
         
         UpdateEnv updateThread = new UpdateEnv(this);
-        updateThread.run();
+        updateThread.start();
     }
     
     public class UpdateEnv extends Thread {
@@ -129,6 +129,7 @@ public class SoccerEnvironment extends Environment {
     public static final String WAIT 	= "wait";
     @Override
     public boolean executeAction(String agName, Structure action) {
+    	logger.info(agName + " is executing "+action);
     	Krislet actor = getKrisletByName(agName);
     	if (action.getFunctor().equals(FIND)) {
             actor.performAction(new Actions.FindAction(action.getTerm(0).toString()));
@@ -147,6 +148,9 @@ public class SoccerEnvironment extends Environment {
     /** Called before the end of MAS execution */
     @Override
     public void stop() {
+    	for (Krislet actor : agent_krislet_map.values()) {
+    		actor.bye();
+    	}
         super.stop();
     }
 }
