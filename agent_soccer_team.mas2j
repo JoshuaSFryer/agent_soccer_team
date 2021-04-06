@@ -2,7 +2,7 @@ MAS agent_soccer_team {
 
 	infrastructure: Centralised
 
-	environment: SoccerEnvironment
+	environment: SoccerEnvironment("agent_soccer_team.mas2j")
 
 	agents:
 		agent1 sample_agent;
