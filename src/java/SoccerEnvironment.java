@@ -42,6 +42,7 @@ public class SoccerEnvironment extends Environment {
     	// args[0] is name of project file
         // Parse that file and get a list of agent names
         List<String> agent_names = getAgentNames(args[0]);
+        logger.info(agent_names.size() + " agents present");
         for (String name : agent_names) {
             logger.info("Agent present: " + name);
         }
@@ -86,16 +87,22 @@ public class SoccerEnvironment extends Environment {
         try {
             jason.mas2j.parser.mas2j parser = new jason.mas2j.parser.mas2j(new FileInputStream(project_filename));
             MAS2JProject project = parser.mas();
-
+            int count = 0;
             // Get names from project
             for (AgentParameters ap : project.getAgents()) {
-                String agent_name = ap.name;
-                // TODO: If needed, append numbers to avoid duplicate names?
-                agent_names.add(agent_name);
-            }
+                String agName = ap.name;
+                for (int cAg = 0; cAg < ap.getNbInstances(); cAg++) {
+                   String numberedAg = agName;
+                   if (ap.getNbInstances() > 1) {
+                      numberedAg += (cAg + 1);
+                   }
+                   agent_names.add(numberedAg);
+                }
+             }
         } catch(Exception e) {
             System.out.println("parse error");
         }
+//        logger.info(count + " agents found");
 
         return agent_names;
     }
