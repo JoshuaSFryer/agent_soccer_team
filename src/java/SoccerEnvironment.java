@@ -34,18 +34,14 @@ public class SoccerEnvironment extends Environment {
         super.init(args);
 
         try {
-            ADDRESS = InetAddress.getByName("");
+            ADDRESS = InetAddress.getByName("localhost");
         } catch (Exception e) {
-            System.out.println("Invalid hostname");
+        	logger.info("Invalid hostname");
         }   
         
     	// args[0] is name of project file
         // Parse that file and get a list of agent names
         List<String> agent_names = getAgentNames(args[0]);
-        logger.info(agent_names.size() + " agents present");
-        for (String name : agent_names) {
-            logger.info("Agent present: " + name);
-        }
 
         agent_krislet_map = new HashMap<String,Krislet>();
         for (String name : agent_names) {
@@ -53,9 +49,11 @@ public class SoccerEnvironment extends Environment {
             try {
                 krislet = new krislet.Krislet(ADDRESS, PORT, TEAM_NAME);
             } catch (SocketException e) {
-                System.out.println("Socket exception when instantiating Krislet");
+            	logger.info("Socket exception when instantiating Krislet");
             }
             agent_krislet_map.put(name, krislet);
+            krislet.start(); // Actually start the agent
+            logger.info("Agent Added: " + name);
         }
         
         
@@ -100,7 +98,7 @@ public class SoccerEnvironment extends Environment {
                 }
              }
         } catch(Exception e) {
-            System.out.println("parse error");
+        	logger.info("Jason Project File parse error");
         }
 //        logger.info(count + " agents found");
 

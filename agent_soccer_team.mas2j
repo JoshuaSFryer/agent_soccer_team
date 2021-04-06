@@ -5,7 +5,7 @@ MAS agent_soccer_team {
 	environment: SoccerEnvironment("agent_soccer_team.mas2j")
 
 	agents:
-		sample_agent #8;
+		sample_agent #1;
 
 	aslSourcePath:
 		"src/asl";
