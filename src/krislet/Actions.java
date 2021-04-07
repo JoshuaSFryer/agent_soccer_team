@@ -11,7 +11,15 @@ public class Actions
         }
 
         public void execute(Krislet krislet) {
-            krislet.turn(40);
+        	// Check if target is in view
+        	ObjectInfo object;
+        	object = krislet.getMemory().getObject(this.target);
+        	// If target is not in view, turn
+        	if (object == null)
+        	{
+        		krislet.turn(40);
+        		krislet.getMemory().waitForNewInfo();
+        	}
         }
     }
 
@@ -24,20 +32,36 @@ public class Actions
         }
 
         public void execute(Krislet krislet) {
-            krislet.kick(100, -1); //object.m_direction); // TODO: replace -1 with object.m_direction, probs should be an argument to this action
+        	ObjectInfo object;
+        	object = krislet.getMemory().getObject(target);
+            krislet.kick(100, object.m_direction);
         }
     }
 
     public static class MoveToAction implements Krislet.Action
     {
         private String target;
+        private static final int TARGET_DISTANCE = 10;
 
         public MoveToAction(String target) {
             this.target = target;
         }
 
         public void execute(Krislet krislet) {
-            krislet.wait(1);
+            ObjectInfo object;
+            object = krislet.getMemory().getObject(target);
+            while (object.m_distance > TARGET_DISTANCE)
+            {
+            	if (object.m_direction != 0)
+            	{
+            		krislet.turn(object.m_direction);
+            	}
+            	else
+            	{
+            		krislet.dash(10*object.m_distance);
+            	}
+            }
+            
         }
     }
 }

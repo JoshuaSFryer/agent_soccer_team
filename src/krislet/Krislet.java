@@ -295,4 +295,9 @@ public class Krislet extends Thread implements SendCommand
     public void performAction(Action action) {
         action.execute(this);
     }
+    
+    public Memory getMemory()
+    {
+    	return this.m_memory;
+    }
 }
