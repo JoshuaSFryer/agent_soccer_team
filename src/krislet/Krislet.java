@@ -289,10 +289,10 @@ public class Krislet extends Thread implements SendCommand
     }
 
     public interface Action {
-        public void excute(Krislet krislet);
+        public void execute(Krislet krislet);
     }
     
     public void performAction(Action action) {
-        action.excute(this);
+        action.execute(this);
     }
 }

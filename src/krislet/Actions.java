@@ -10,7 +10,7 @@ public class Actions
             this.target = target;
         }
 
-        public void excute(Krislet krislet) {
+        public void execute(Krislet krislet) {
             krislet.turn(40);
         }
     }
@@ -23,7 +23,7 @@ public class Actions
             this.target = target;
         }
 
-        public void excute(Krislet krislet) {
+        public void execute(Krislet krislet) {
             krislet.kick(100, -1); //object.m_direction); // TODO: replace -1 with object.m_direction, probs should be an argument to this action
         }
     }
@@ -36,7 +36,7 @@ public class Actions
             this.target = target;
         }
 
-        public void excute(Krislet krislet) {
+        public void execute(Krislet krislet) {
             krislet.wait(1);
         }
     }
