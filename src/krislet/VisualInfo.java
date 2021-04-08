@@ -179,9 +179,9 @@ class VisualInfo
 		objInfo = new LineInfo();
 	} //Flag
 	else if(p_flag.matcher(n).matches()){
-	    char type = ' '; // p|g
-	    char pos1 = ' '; // l|r|t|b|c
-	    char pos2 = ' '; // t|b|l|r|c
+	    char type = '_'; // p|g
+	    char pos1 = '_'; // l|r|t|b|c
+	    char pos2 = '_'; // t|b|l|r|c
 	    int num = 0;     // 0|10|20|30|40|50
 	    boolean out = true;
 	    if(len == 1)
@@ -235,9 +235,9 @@ class VisualInfo
 		    }
 		}
       		String flagType = "flag";
-      		if (type != ' ') flagType = flagType + " " + type;
-      		if (pos1 != ' ') flagType = flagType + " " + pos1;
-      		if (pos2 != ' ') flagType = flagType + " " + pos2;
+      		if (type != '_') flagType = flagType + "_" + type;
+      		if (pos1 != '_') flagType = flagType + "_" + pos1;
+      		if (pos2 != '_') flagType = flagType + "_" + pos2;
       		// Implementing flags like this, allows one to specifically find a
       		// particular flag (i.e. "flag c", or "flag p l t")
 		objInfo = new FlagInfo(flagType, type, pos1, pos2, num, out);

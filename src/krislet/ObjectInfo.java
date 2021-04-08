@@ -133,12 +133,12 @@ class GoalInfo extends ObjectInfo
   public GoalInfo()
   {
     super("goal");
-    m_side = ' ';
+    m_side = '_';
   }
 
   public GoalInfo(char side)
   {
-    super("goal " + side);
+    super("goal_" + side);
     m_side = side;
   }
 
@@ -183,9 +183,9 @@ class FlagInfo extends ObjectInfo
   public FlagInfo()
   {
     super("flag");
-    m_type = ' ';
-    m_pos1 = ' ';
-    m_pos2 = ' ';
+    m_type = '_';
+    m_pos1 = '_';
+    m_pos2 = '_';
     m_num = 0;
     m_out = false;
   }

@@ -7,7 +7,7 @@
 !score.
 
 /* Plans */
-+!score : beside(ball) & found(targetnet) <- kick(targetnet); !score.
-+!score : beside(ball) & not found(targetnet) <- find(targetnet); !score.
++!score : beside(ball) & found(goal_r) <- kick(goal_r); !score.
++!score : beside(ball) & not found(goal_r) <- find(goal_r); !score.
 +!score : found(ball) & not beside(ball) <- moveto(ball); !score.
 +!score : true <- find(ball); !score.

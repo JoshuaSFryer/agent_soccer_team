@@ -47,6 +47,7 @@ public class Krislet extends Thread implements SendCommand
 		m_team = team;
 		m_playing = true;
     }
+
 																 
     //---------------------------------------------------------------------------
     // This destructor closes socket to server
@@ -151,6 +152,10 @@ public class Krislet extends Thread implements SendCommand
 
 		m_memory = new Memory();
 		m_timeOver = false;
+		
+	    m_side = m.group(1).charAt(0);
+	    m_number = Integer.parseInt(m.group(2));
+	    m_playMode = m.group(3);
     }
 
 	public void see(VisualInfo info) {
@@ -175,7 +180,9 @@ public class Krislet extends Thread implements SendCommand
     // This function sends initialization command to the server
     private void init()
     {
-	send("(init " + m_team + " (version 9))");
+		send("(init " + m_team + " (version 9))");
+	    //if(Pattern.matches("^before_kick_off.*",m_playMode))
+	    //    this.move( -Math.random()*52.5 , 34 - Math.random()*68.0 );
     }
 
     //---------------------------------------------------------------------------
@@ -266,6 +273,9 @@ public class Krislet extends Thread implements SendCommand
     private int			m_port;			// server port
     private String		m_team;			// team name
     private String 		m_name; 		// agent name
+    private char 		m_side; 		// l or r
+    private int 		m_number; 		// player
+    private String 		m_playMode;     // playmode
     //private SensorInput		m_brain;		// input for sensor information
     private boolean             m_playing;              // controls the MainLoop
 	private Memory m_memory;
@@ -287,7 +297,10 @@ public class Krislet extends Thread implements SendCommand
     
     public Collection<Literal> getPercepts() {
     	if (m_memory != null) {
-    		return m_memory.getPercepts();
+    		ArrayList<Literal> percepts = m_memory.getPercepts();
+    		percepts.add(Literal.parseLiteral("side("+m_side+")"));
+    		percepts.add(Literal.parseLiteral("player("+m_number+")"));
+    		return percepts;
     	}
     	else {
     		return new ArrayList<Literal>();
