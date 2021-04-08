@@ -154,6 +154,8 @@ public class SoccerEnvironment extends Environment {
     		logger.info("executing: "+action+", but not implemented!");
     		return false;
     	}
+    	
+    	actor.wait(1);
         return true; // the action was executed with success
     }
 

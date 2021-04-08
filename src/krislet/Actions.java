@@ -40,7 +40,7 @@ public class Actions
     public static class MoveToAction implements Krislet.Action
     {
         private String target;
-        private static final int TARGET_DISTANCE = 10;
+        private static final float TARGET_DISTANCE = 0.9f;
 
         public MoveToAction(String target) {
             this.target = target;
