@@ -18,7 +18,6 @@ public class Actions
         	if (object == null)
         	{
         		krislet.turn(40);
-        		krislet.getMemory().waitForNewInfo();
         	}
         }
     }
@@ -50,7 +49,7 @@ public class Actions
         public void execute(Krislet krislet) {
             ObjectInfo object;
             object = krislet.getMemory().getObject(target);
-            while (object.m_distance > TARGET_DISTANCE)
+            if (object.m_distance > TARGET_DISTANCE)
             {
             	if (object.m_direction != 0)
             	{
@@ -60,8 +59,7 @@ public class Actions
             	{
             		krislet.dash(10*object.m_distance);
             	}
-            }
-            
+            }            
         }
     }
 }

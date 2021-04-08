@@ -141,8 +141,9 @@ public class SoccerEnvironment extends Environment {
     		actor.wait(Integer.parseInt(action.getTerm(0).toString()));
     	} else {
     		logger.info("executing: "+action+", but not implemented!");
+    		return false;
     	}
-        return false; // the action was executed with success
+        return true; // the action was executed with success
     }
 
     /** Called before the end of MAS execution */
