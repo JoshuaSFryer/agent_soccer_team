@@ -22,7 +22,7 @@ class Memory
     }
 
     private ArrayList<Literal> percepts = new ArrayList<Literal>();
-    public Collection<Literal> getPercepts() {
+    public ArrayList<Literal> getPercepts() {
     	return percepts;
     }
 
@@ -34,9 +34,11 @@ class Memory
         		ObjectInfo object = (ObjectInfo)m_info.m_objects.elementAt(c);
         		// Jason freaks out if you try to add something to the knowledge base that has a space it in
         		// Note to jason that we found the object
-        		percepts.add(Literal.parseLiteral("found(" + object.m_type.replace(" ", "_") + ")"));
+        		percepts.add(Literal.parseLiteral("found(" + object.m_type + ")"));
         		// note to jason that we are close to the object
-        		if(object.m_distance < 1) percepts.add(Literal.parseLiteral("close(" + object.m_type.replace(" ", "_") + ")"));
+        		if(object.m_distance < 1f) {
+        			percepts.add(Literal.parseLiteral("beside(" + object.m_type + ")"));
+        		}
     	    }	
     	}
     }
