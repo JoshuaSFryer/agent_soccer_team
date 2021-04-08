@@ -5,6 +5,13 @@ package krislet;
 //	Date:			1997/04/28
 //
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import jason.asSyntax.Atom;
+import jason.asSyntax.Literal;
+import jason.asSyntax.Structure;
+
 class Memory 
 {
     //---------------------------------------------------------------------------
@@ -14,7 +21,18 @@ class Memory
     {
     }
 
+    private ArrayList<Literal> percepts = new ArrayList<Literal>();
+    public Collection<Literal> getPercepts() {
+    	return percepts;
+    }
 
+    public void updatePercepts() {
+    	percepts.clear();
+    	if (m_info != null) {
+        	percepts.add(Literal.parseLiteral("time(" + m_info.getTime() + ")"));
+    	}
+    }
+    
     //---------------------------------------------------------------------------
     // This function puts see information into our memory
     public void store(VisualInfo info)
