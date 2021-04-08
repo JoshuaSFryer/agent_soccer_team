@@ -5,6 +5,13 @@ package krislet;
 //	Date:			1997/04/28
 //
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import jason.asSyntax.Atom;
+import jason.asSyntax.Literal;
+import jason.asSyntax.Structure;
+
 class Memory 
 {
     //---------------------------------------------------------------------------
@@ -14,7 +21,26 @@ class Memory
     {
     }
 
+    private ArrayList<Literal> percepts = new ArrayList<Literal>();
+    public Collection<Literal> getPercepts() {
+    	return percepts;
+    }
 
+    public void updatePercepts() {
+    	percepts.clear();
+    	if (m_info != null) {
+        	percepts.add(Literal.parseLiteral("time(" + m_info.getTime() + ")"));
+        	for(int c = 0 ; c < m_info.m_objects.size() ; c ++) {
+        		ObjectInfo object = (ObjectInfo)m_info.m_objects.elementAt(c);
+        		// Jason freaks out if you try to add something to the knowledge base that has a space it in
+        		// Note to jason that we found the object
+        		percepts.add(Literal.parseLiteral("found(" + object.m_type.replace(" ", "_") + ")"));
+        		// note to jason that we are close to the object
+        		if(object.m_distance < 1) percepts.add(Literal.parseLiteral("close(" + object.m_type.replace(" ", "_") + ")"));
+    	    }	
+    	}
+    }
+    
     //---------------------------------------------------------------------------
     // This function puts see information into our memory
     public void store(VisualInfo info)

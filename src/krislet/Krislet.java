@@ -14,7 +14,9 @@ import java.net.*;
 import java.util.*;
 import java.util.regex.*;
 
+import jason.asSyntax.Atom;
 import jason.asSyntax.Literal;
+import jason.asSyntax.Structure;
 
 
 //***************************************************************************
@@ -35,9 +37,10 @@ public class Krislet extends Thread implements SendCommand
     }
     //---------------------------------------------------------------------------
     // This constructor opens socket for  connection with server
-    public Krislet(InetAddress host, int port, String team) 
+    public Krislet(InetAddress host, int port, String team, String name) 
 	throws SocketException
     {
+    	m_name = name;
 		m_socket = new DatagramSocket();
 		m_host = host;
 		m_port = port;
@@ -262,6 +265,7 @@ public class Krislet extends Thread implements SendCommand
     private InetAddress		m_host;			// Server address
     private int			m_port;			// server port
     private String		m_team;			// team name
+    private String 		m_name; 		// agent name
     //private SensorInput		m_brain;		// input for sensor information
     private boolean             m_playing;              // controls the MainLoop
 	private Memory m_memory;
@@ -272,14 +276,22 @@ public class Krislet extends Thread implements SendCommand
     // constants
     private static final int	MSG_SIZE = 4096;	// Size of socket buffer
     
-    private ArrayList<Literal> percepts = new ArrayList<Literal>();
+    
     
     public void updatePercepts() {
-    	// TODO: check memory and update percepts
+    	if (m_memory != null) {
+    		m_memory.updatePercepts();
+    	}
+    	
     }
     
     public Collection<Literal> getPercepts() {
-    	return percepts;
+    	if (m_memory != null) {
+    		return m_memory.getPercepts();
+    	}
+    	else {
+    		return new ArrayList<Literal>();
+    	}
     }
     
     public void wait(int steps) {

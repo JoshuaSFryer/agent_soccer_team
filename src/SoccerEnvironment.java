@@ -47,7 +47,7 @@ public class SoccerEnvironment extends Environment {
         for (String name : agent_names) {
             Krislet krislet = null;
             try {
-                krislet = new krislet.Krislet(ADDRESS, PORT, TEAM_NAME);
+                krislet = new krislet.Krislet(ADDRESS, PORT, TEAM_NAME, name);
             } catch (SocketException e) {
             	logger.info("Socket exception when instantiating Krislet");
             }
@@ -120,7 +120,18 @@ public class SoccerEnvironment extends Environment {
 
     @Override 
     public Collection<Literal> getPercepts(String agName){
-    	return getKrisletByName(agName).getPercepts();
+    	Krislet k = getKrisletByName(agName);
+    	
+    	// Sometimes a random agent call df tries to get its 
+    	// percepts. I have no idea why so lets just pass it to
+    	// the sumer function
+    	if (k != null) {
+    		return k.getPercepts();
+    	}
+    	else {
+    		return super.getPercepts(agName);
+    	}
+    	
     }
 
     public static final String FIND 	= "find";
