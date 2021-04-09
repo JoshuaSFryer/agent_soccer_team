@@ -1,5 +1,3 @@
-// Environment code for project agent_soccer_team
-
 import jason.asSyntax.*;
 import jason.environment.*;
 import jason.asSyntax.parser.*;
@@ -18,7 +16,9 @@ import java.util.logging.*;
 import krislet.Krislet;
 import krislet.Actions;
 
-
+/**
+ * The environment sets up the agents and manages them during the game
+ */
 public class SoccerEnvironment extends Environment {
     
     
@@ -55,7 +55,6 @@ public class SoccerEnvironment extends Environment {
             krislet.start(); // Actually start the agent
             logger.info("Agent Added: " + name);
         }
-        
         
         UpdateEnv updateThread = new UpdateEnv(this);
         updateThread.start();
