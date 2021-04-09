@@ -4,7 +4,7 @@
 
 /* Initial goals */
 
-!score.
+!closest.
 
 /* Plans */
 
@@ -13,16 +13,24 @@
 // 2. Score (if closest)
 // 3. Run to opposing net (if not closest)
 
-// How to score
-+!score : beside(ball) & found(targetnet) <- kick(targetnet); !score.
-+!score : beside(ball) & not found(targetnet) <- find(targetnet); !score.
-+!score : found(ball) & not beside(ball) <- moveto(ball); !score.
-+!score : true <- find(ball); !score.
-
 // Determining closest agent
 // 1. All strikers need to see ball
 // 2. All strikers determine their distances to ball & communicate
 // 3. Closest striker to ball is assigned belief "attacker"; all agents delete goal !closest.
 
-+!closest : 
++!closest : not isClosest(ball) <- !assist.
++!closest : isClosest(ball) <- !score.
++!closest : found(ball) <- compareDistances(ball); !closest.
 +!closest : true <- find(ball); !closest.
+//+!closest : true <- find(ball); !score.
+
+// How to score
++!score : beside(ball) & found(targetnet) <- kick(targetnet); !closest.
++!score : beside(ball) & not found(targetnet) <- find(targetnet); !score.
++!score : found(ball) & not beside(ball) <- moveto(ball); !score.
++!score : true <- find(ball); !score.
+
+// Assisting
+// Run to opponents net
++!assist : found(targetnet) <- moveto(targetnet); !closest.
++!assist : true <- find(targetnet); !assist.
