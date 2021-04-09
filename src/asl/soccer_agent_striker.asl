@@ -18,8 +18,8 @@
 // 2. All strikers determine their distances to ball & communicate
 // 3. Closest striker to ball is assigned belief "attacker"; all agents delete goal !closest.
 
-+!closest : not isClosest(ball) <- !assist.
-+!closest : isClosest(ball) <- !score.
++!closest : not isClosest(ball) <- find(targetnet); !assist.
++!closest : isClosest(ball) <- find(ball); !score.
 +!closest : found(ball) <- compareDistances(ball); !closest.
 +!closest : true <- find(ball); !closest.
 //+!closest : true <- find(ball); !score.
