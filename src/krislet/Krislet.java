@@ -73,6 +73,10 @@ public class Krislet extends Thread implements SendCommand
 		m_socket.receive(packet);
 		parseInitCommand(new String(buffer));
 		m_port = packet.getPort();
+		
+		if(Pattern.matches("^before_kick_off.*", m_playMode)) {
+			move(-Math.random()*52.5, 34-Math.random()*68.0);
+		}
 
 		// Now we should be connected to the server
 		// and we know side, player number and play mode
