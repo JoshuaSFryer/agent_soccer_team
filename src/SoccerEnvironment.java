@@ -89,19 +89,24 @@ public class SoccerEnvironment extends Environment {
 
     @Override 
     public Collection<Literal> getPercepts(String agName){
-    	Krislet k = getKrisletByName(agName);
-    	
-    	// Sometimes a random agent call df tries to get its 
-    	// percepts. I have no idea why so lets just pass it to
-    	// the sumer function
-    	if (k != null) {
-    		k.updatePercepts();
-    		return k.getPercepts();
+    	try {
+	    	Krislet k = getKrisletByName(agName);
+	    	
+	    	// Sometimes a random agent call df tries to get its 
+	    	// percepts. I have no idea why so lets just pass it to
+	    	// the sumer function
+	    	if (k != null) {
+	    		k.updatePercepts();
+	    		return k.getPercepts();
+	    	}
+	    	else {
+	    		return super.getPercepts(agName);
+	    	}
     	}
-    	else {
-    		return super.getPercepts(agName);
+    	catch (Exception e) {
+    		logger.info("Exception occured" + e.getMessage());
+    		return new ArrayList<Literal>();
     	}
-    	
     }
 
     public static final String FIND 	= "find";
@@ -112,26 +117,31 @@ public class SoccerEnvironment extends Environment {
     public static final String CHECKIFSELF	= "checkifself";
     @Override
     public boolean executeAction(String agName, Structure action) {
-    	logger.info(agName + " is executing "+action);
-    	Krislet actor = getKrisletByName(agName);
-    	if (action.getFunctor().equals(FIND)) {
-            actor.performAction(new Actions.FindAction(action.getTerm(0).toString()));
-    	} else if (action.getFunctor().equals(KICK)) {
-            actor.performAction(new Actions.KickAction(action.getTerm(0).toString()));
-    	} else if (action.getFunctor().equals(MOVETO)) {
-            actor.performAction(new Actions.MoveToAction(action.getTerm(0).toString()));
-    	} else if (action.getFunctor().equals(WAIT)) {
-    		actor.wait(Integer.parseInt(action.getTerm(0).toString()));
-    	} else if (action.getFunctor().equals(WAITRANDOM)) {
-            actor.performAction(new Actions.WaitRandomAction());
-    	} else if (action.getFunctor().equals(CHECKIFSELF)) {
-            actor.performAction(new Actions.CheckIfSelfAction(action.getTerm(0).toString()));
-    	} else {
-    		logger.info("executing: "+action+", but not implemented!");
-    		return false;
+    	try {
+	    	logger.info(agName + " is executing "+action);
+	    	Krislet actor = getKrisletByName(agName);
+	    	if (action.getFunctor().equals(FIND)) {
+	            actor.performAction(new Actions.FindAction(action.getTerm(0).toString()));
+	    	} else if (action.getFunctor().equals(KICK)) {
+	            actor.performAction(new Actions.KickAction(action.getTerm(0).toString()));
+	    	} else if (action.getFunctor().equals(MOVETO)) {
+	            actor.performAction(new Actions.MoveToAction(action.getTerm(0).toString()));
+	    	} else if (action.getFunctor().equals(WAIT)) {
+	    		actor.wait(Integer.parseInt(action.getTerm(0).toString()));
+	    	} else if (action.getFunctor().equals(WAITRANDOM)) {
+	            actor.performAction(new Actions.WaitRandomAction());
+	    	} else if (action.getFunctor().equals(CHECKIFSELF)) {
+	            actor.performAction(new Actions.CheckIfSelfAction(action.getTerm(0).toString()));
+	    	} else {
+	    		logger.info("executing: "+action+", but not implemented!");
+	    		return false;
+	    	}actor.wait(1);
+    	}
+    	catch (Exception e) {
+    		logger.info("Exception occured" + e.getMessage());
     	}
     	
-    	actor.wait(1);
+    	
         return true; // the action was executed with success
     }
 
