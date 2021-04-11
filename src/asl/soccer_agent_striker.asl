@@ -19,7 +19,7 @@
 +!seeking : not playerGoingForBall & not found(ball) <- find(ball); !seeking.
 +!seeking : not playerGoingForBall <- !seeking.
 
-+!score : beside(ball) & found(goal_r) <- kick(goal_r) .send([sample_agent1,sample_agent2],tell,done); -itIsSelf; !seeking.
++!score : beside(ball) & found(goal_r) <- kick(goal_r) .send([soccer_agent_striker1,soccer_agent_striker2],tell,done); -itIsSelf; !seeking.
 +!score : beside(ball) & not found(goal_r) <- find(goal_r); !score.
 +!score : found(ball) & not beside(ball) <- moveto(ball); !score.
 +!score : true <- find(ball); !score.
