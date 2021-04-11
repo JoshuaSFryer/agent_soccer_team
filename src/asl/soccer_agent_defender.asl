@@ -19,6 +19,6 @@
 +!defend : true <- find(ball); !defend.
 
 +!stayback : found(ball) & close(ball) & amBesideGoal <- find(ball); !defend.
-+!stayback : found(goal_l) & beside(goal_l) <- find(ball); +amBesideGoal; !stayback.
-+!stayback : found(goal_l) & not beside(goal_l) <- moveto(goal_l); !stayback.
++!stayback : found(goal_l) & close(goal_l) <- find(ball); +amBesideGoal; !stayback.
++!stayback : found(goal_l) & not close(goal_l) <- moveto(goal_l); !stayback.
 +!stayback : true <- find(goal_l); !stayback.
