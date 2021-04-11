@@ -59,7 +59,8 @@ public class Actions
             	}
             	else
             	{
-            		krislet.dash(10*object.m_distance);
+            		final int MAX_RUN_DISTNACE = 100;
+            		krislet.dash(object.m_distance < MAX_RUN_DISTNACE ? MAX_RUN_DISTNACE : object.m_distance);
             	}
             }            
         }
