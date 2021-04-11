@@ -56,27 +56,6 @@ public class SoccerEnvironment extends Environment {
             logger.info("Agent Added: " + name);
         }
         
-        UpdateEnv updateThread = new UpdateEnv(this);
-        updateThread.start();
-    }
-    
-    public class UpdateEnv extends Thread {
-    	SoccerEnvironment env;
-		public UpdateEnv(SoccerEnvironment env) {
-			this.env = env;
-		}
-		
-		public void run() {
-			while(true) {
-	    		env.updatePercepts();
-	    		try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
     }
 
     public List<String> getAgentNames(String project_filename) {
@@ -107,15 +86,6 @@ public class SoccerEnvironment extends Environment {
     public Krislet getKrisletByName(String agName) {
     	return agent_krislet_map.get(agName);
     }
-    
-    public static final Literal foundBall = Literal.parseLiteral("found(ball)");
-    public void updatePercepts() {
-    	//TODO: iterate through each actor and update its percepts from its memory
-    	for (Krislet actor : agent_krislet_map.values()) {
-    		actor.updatePercepts();
-    	}
-    	informAgsEnvironmentChanged();
-    }
 
     @Override 
     public Collection<Literal> getPercepts(String agName){
@@ -125,6 +95,7 @@ public class SoccerEnvironment extends Environment {
     	// percepts. I have no idea why so lets just pass it to
     	// the sumer function
     	if (k != null) {
+    		k.updatePercepts();
     		return k.getPercepts();
     	}
     	else {
