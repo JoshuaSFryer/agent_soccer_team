@@ -1,9 +1,11 @@
 package krislet;
 
-import jason.asSyntax.Literal;
-
 public class Actions
 {
+    /**
+     * An action that makes the Krislet agent look for a target object
+     * @param target The String name of the object to look for
+     */
     public static class FindAction implements Krislet.Action
     {
         private String target;
@@ -24,6 +26,10 @@ public class Actions
         }
     }
 
+    /**
+     * An action that makes the Krislet agent kick the target object
+     * @param target The String name of the object to kick
+     */
     public static class KickAction implements Krislet.Action
     {
         private String target;
@@ -39,6 +45,11 @@ public class Actions
         }
     }
 
+
+    /**
+     * An action that makes the Krislet agent move towards a target object
+     * @param target The String name of the object to move towards
+     */
     public static class MoveToAction implements Krislet.Action
     {
         private String target;
@@ -63,34 +74,6 @@ public class Actions
             		krislet.dash(object.m_distance < MAX_RUN_DISTANCE ? MAX_RUN_DISTANCE : object.m_distance);
             	}
             }            
-        }
-    }
-
-    // TODO: Can probably delete this
-    public static class WaitRandomAction implements Krislet.Action
-    {
-        public void execute(Krislet krislet) {
-        	long stepsToWaitFor = (long) (Math.random() * 4);
-        	try {
-        		Thread.sleep(2*SoccerParams.simulator_step*stepsToWaitFor);
-        	} catch(Exception e){}
-        	krislet.getPercepts().add(Literal.parseLiteral("goForBall"));
-        }
-    }
-
-    public static class CheckIfSelfAction implements Krislet.Action
-    {
-    	private String sender;
-        public CheckIfSelfAction(String sender) {
-            this.sender = sender;
-        }
-
-        public void execute(Krislet krislet) {
-        	if (sender == krislet.getName()) {
-        		krislet.getPercepts().add(Literal.parseLiteral("itIsSelf"));
-        	} else {
-        		krislet.getPercepts().add(Literal.parseLiteral("itIsNotSelf"));
-        	}
         }
     }
 }

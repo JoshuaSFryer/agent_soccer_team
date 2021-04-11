@@ -14,9 +14,7 @@ import java.net.*;
 import java.util.*;
 import java.util.regex.*;
 
-import jason.asSyntax.Atom;
 import jason.asSyntax.Literal;
-import jason.asSyntax.Structure;
 
 
 //***************************************************************************

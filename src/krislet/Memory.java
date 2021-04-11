@@ -6,11 +6,8 @@ package krislet;
 //
 
 import java.util.ArrayList;
-import java.util.Collection;
 
-import jason.asSyntax.Atom;
 import jason.asSyntax.Literal;
-import jason.asSyntax.Structure;
 
 class Memory 
 {
