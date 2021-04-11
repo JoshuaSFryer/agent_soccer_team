@@ -35,9 +35,13 @@ class Memory
         		// Jason freaks out if you try to add something to the knowledge base that has a space it in
         		// Note to jason that we found the object
         		percepts.add(Literal.parseLiteral("found(" + object.m_type + ")"));
+				percepts.add(Literal.parseLiteral("dist(" + object.m_type + ',' + object.m_distance + ")"));
         		// note to jason that we are close to the object
         		if(object.m_distance < 1f) {
         			percepts.add(Literal.parseLiteral("beside(" + object.m_type + ")"));
+        		}
+        		if(object.m_distance < 15f) {
+        			percepts.add(Literal.parseLiteral("close(" + object.m_type + ")"));
         		}
     	    }	
     	}

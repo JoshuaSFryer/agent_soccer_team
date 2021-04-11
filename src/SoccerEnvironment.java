@@ -1,5 +1,3 @@
-// Environment code for project agent_soccer_team
-
 import jason.asSyntax.*;
 import jason.environment.*;
 import jason.asSyntax.parser.*;
@@ -18,7 +16,9 @@ import java.util.logging.*;
 import krislet.Krislet;
 import krislet.Actions;
 
-
+/**
+ * The environment sets up the agents and manages them during the game
+ */
 public class SoccerEnvironment extends Environment {
     
     
@@ -55,7 +55,6 @@ public class SoccerEnvironment extends Environment {
             krislet.start(); // Actually start the agent
             logger.info("Agent Added: " + name);
         }
-        
         
         UpdateEnv updateThread = new UpdateEnv(this);
         updateThread.start();
@@ -138,6 +137,8 @@ public class SoccerEnvironment extends Environment {
     public static final String KICK 	= "kick";
     public static final String MOVETO 	= "moveto";
     public static final String WAIT 	= "wait";
+    public static final String WAITRANDOM 	= "waitrandom";
+    public static final String CHECKIFSELF	= "checkifself";
     @Override
     public boolean executeAction(String agName, Structure action) {
     	logger.info(agName + " is executing "+action);
@@ -150,6 +151,10 @@ public class SoccerEnvironment extends Environment {
             actor.performAction(new Actions.MoveToAction(action.getTerm(0).toString()));
     	} else if (action.getFunctor().equals(WAIT)) {
     		actor.wait(Integer.parseInt(action.getTerm(0).toString()));
+    	} else if (action.getFunctor().equals(WAITRANDOM)) {
+            actor.performAction(new Actions.WaitRandomAction());
+    	} else if (action.getFunctor().equals(CHECKIFSELF)) {
+            actor.performAction(new Actions.CheckIfSelfAction(action.getTerm(0).toString()));
     	} else {
     		logger.info("executing: "+action+", but not implemented!");
     		return false;

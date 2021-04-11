@@ -4,25 +4,27 @@
 
 /* Initial goals */
 
-!score.
+// Start with the seeking goal where our objective is to find the ball OR hear from another player
+// that they are going for the ball
+!seeking.
 
 /* Plans */
+-itIsSelf <- -playerGoingForBall; -done.
++playerGoingForBall[source(A)] : not itIsSelf <- .print("Another player is getting the ball, I will assist them").
++done[source(A)] <- .print("Other agent has kicked the ball. I will go back to seeking state.").
 
-// 3 goals
-// 1. Determine if you are closest striker --> add belief ("attacker" or "assist")
-// 2. Score (if closest)
-// 3. Run to opposing net (if not closest)
++!seeking : playerGoingForBall & itIsSelf <- !score.
++!seeking : playerGoingForBall & not itIsSelf <- !assist.
++!seeking : not playerGoingForBall & found(ball) <- +itIsSelf; .send([soccer_agent_striker1,soccer_agent_striker2],tell,playerGoingForBall); !seeking.
++!seeking : not playerGoingForBall & not found(ball) <- find(ball); !seeking.
++!seeking : not playerGoingForBall <- !seeking.
 
-// How to score
-+!score : beside(ball) & found(targetnet) <- kick(targetnet); !score.
-+!score : beside(ball) & not found(targetnet) <- find(targetnet); !score.
++!score : beside(ball) & found(goal_r) <- kick(goal_r) .send([sample_agent1,sample_agent2],tell,done); -itIsSelf; !seeking.
++!score : beside(ball) & not found(goal_r) <- find(goal_r); !score.
 +!score : found(ball) & not beside(ball) <- moveto(ball); !score.
 +!score : true <- find(ball); !score.
 
-// Determining closest agent
-// 1. All strikers need to see ball
-// 2. All strikers determine their distances to ball & communicate
-// 3. Closest striker to ball is assigned belief "attacker"; all agents delete goal !closest.
-
-+!closest : 
-+!closest : true <- find(ball); !closest.
++!assist : not done & beside(goal_r) <- find(ball); !assist.
++!assist : not done & found(goal_r) & not beside(goal_r) <- moveto(goal_r); !assist.
++!assist : not done <- find(goal_r); !assist.
++!assist : done <- -done; -playerGoingForBall; !seeking.
