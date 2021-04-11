@@ -40,6 +40,9 @@ class Memory
         		if(object.m_distance < 1f) {
         			percepts.add(Literal.parseLiteral("beside(" + object.m_type + ")"));
         		}
+        		if(object.m_distance < 15f) {
+        			percepts.add(Literal.parseLiteral("close(" + object.m_type + ")"));
+        		}
     	    }	
     	}
     }

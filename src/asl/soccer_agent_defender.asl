@@ -4,7 +4,7 @@
 
 /* Initial goals */
 
-!defend.
+!stayback.
 
 /* Plans */
 
@@ -13,12 +13,12 @@
 // Look for ball
 // Ball is closer than a threshold, go to ball and kick away
 
-+!defend : beside(ball) & found(targetnet) <- kick(targetnet); !stayback.
-+!defend : beside(ball) & not found(targetnet) <- find(targetnet); !defend.
-+!defend : found(ball) & not beside(ball) <- moveto(ball); !defend.
++!defend : beside(ball) & found(goal_r) <- kick(goal_r); -amBesideGoal; !stayback.
++!defend : found(ball) & beside(ball) & not found(goal_r) <- find(goal_r); -amBesideGoal; !defend.
++!defend : found(ball) & not beside(ball) <- moveto(ball); -amBesideGoal; !defend.
 +!defend : true <- find(ball); !defend.
 
-+!stayback : beside(friendlynet) & found(ball) & close(ball) <- find(ball); !defend.
-+!stayback : beside(friendlynet) <- find(ball); !stayback.
-+!stayback : found(friendlynet) & not beside(friendlynet) <- moveto(friendlynet); !stayback.
-+!stayback : true <- find(friendlynet); !stayback.
++!stayback : found(ball) & close(ball) & amBesideGoal <- find(ball); !defend.
++!stayback : found(goal_l) & beside(goal_l) <- find(ball); +amBesideGoal; !stayback.
++!stayback : found(goal_l) & not beside(goal_l) <- moveto(goal_l); !stayback.
++!stayback : true <- find(goal_l); !stayback.
